@@ -1,0 +1,14 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+numpy
+pandas
+matplotlib
+seaborn
+Pillow
+scikit-learn
+tqdm
+torch==2.13.0+cpu
+torchvision==0.28.0+cpu
+jupyterlab
+ipykernel
+ipywidgets
