@@ -31,6 +31,30 @@ jupyter lab
 Open `alzheimer_classification.ipynb` and select the
 `Alzheimer Classification (.venv)` kernel before running the cells.
 
+## Dataset layout
+
+Download the Kaggle dataset `tourist55/alzheimers-dataset-4-class-of-images`
+and extract it without combining or renaming its original folders. The
+notebook expects this layout:
+
+```text
+Alzheimer_s Dataset/
+├── train/
+│   ├── NonDemented/
+│   ├── VeryMildDemented/
+│   ├── MildDemented/
+│   └── ModerateDemented/
+└── test/
+    ├── NonDemented/
+    ├── VeryMildDemented/
+    ├── MildDemented/
+    └── ModerateDemented/
+```
+
+The notebook verifies the expected 5,121/1,279 Kaggle split, creates
+validation data only from the training directory, and leaves the original
+test directory untouched for final evaluation.
+
 For later sessions, only activation and Jupyter startup are needed:
 
 ```bash
