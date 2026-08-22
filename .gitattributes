@@ -1,1 +1,2 @@
 models/alzheimer_resnet50_best.pt filter=lfs diff=lfs merge=lfs -text
+*.ipynb text eol=lf
