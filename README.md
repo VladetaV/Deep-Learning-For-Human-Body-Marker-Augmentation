@@ -26,11 +26,10 @@ by Fang Shu and Longling Tian.
 The two small CNN checkpoints are stored directly in Git. The larger
 ResNet-50 and contrastive-learning checkpoints are approximately 95 MiB each
 and are stored using [Git Large File Storage (Git LFS)](https://git-lfs.com/).
-These include the ImageNet-pretrained ResNet-50, supervised contrastive
-encoders and classifiers, the random-erasing experiment, and the
-self-supervised SimCLR models, including the classifier trained with 10% of
-the labels. Together, the LFS-tracked checkpoints occupy approximately
-1.4 GiB.
+These include the ImageNet-pretrained ResNet-50, the supervised contrastive
+encoder and its classifiers, and the self-supervised SimCLR encoder and its
+classifiers, including the one trained with 10% of the labels. Together, the
+LFS-tracked checkpoints occupy approximately 750 MiB.
 
 Install Git LFS before cloning the repository. For example, on Ubuntu or
 Debian:
@@ -65,9 +64,8 @@ ls -lh models/*.pt
 The large checkpoint files should be approximately 95 MiB each. When the
 corresponding retraining flags are set to `False`, the notebook loads the
 committed checkpoints and skips the associated searches or training runs.
-These flags are `RETRAIN_RESNET`, `RETRAIN_CONTRASTIVE`,
-`RETRAIN_CONTRASTIVE_CLASSIFIER`, `RETRAIN_OCCLUSION` and
-`RETRAIN_SEMI_SUPERVISED`.
+These flags are `RETRAIN_MODELS`, `RETRAIN_RESNET`, `RETRAIN_CONTRASTIVE`,
+`RETRAIN_CONTRASTIVE_CLASSIFIER` and `RETRAIN_SIMCLR`.
 
 ## Environment setup
 
