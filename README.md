@@ -18,7 +18,7 @@ by Fang Shu and Longling Tian.
 
 ### Authors
 
-- [Jovan Vukićević](https://github.com/jormundur00)
+- [Jovan Vukićević](https://github.com/jvukicev)
 - [Vladeta Vujačić](https://github.com/VladetaV)
 
 ## Trained models and Git LFS
