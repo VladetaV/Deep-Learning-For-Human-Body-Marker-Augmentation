@@ -1,10 +1,35 @@
 # Alzheimer MRI Classification
 
+## About the project
+
+This project was created as part of the Machine Learning course at the
+Faculty of Mathematics, University of Belgrade. It explores deep learning
+methods for classifying brain MRI images into four stages of Alzheimer's
+disease: non-demented, very mildly demented, mildly demented and moderately
+demented.
+
+The project compares convolutional neural network baselines, an
+ImageNet-pretrained ResNet-50, supervised contrastive learning and
+self-supervised contrastive learning. It also examines targeted data
+augmentation, class imbalance and classification with a reduced set of
+labels. The implementation is based on and extends the experiments described
+in [Deep Learning Methods for Alzheimer's Disease Prediction](https://cs230.stanford.edu/projects_fall_2022/reports/108.pdf)
+by Fang Shu and Longling Tian.
+
+### Authors
+
+- [Jovan Vukićević](https://github.com/jvukicev)
+- [Vladeta Vujačić](https://github.com/VladetaV)
+
 ## Trained models and Git LFS
 
-The trained CNN checkpoints are stored directly in the repository. The larger
-ResNet-50 checkpoint, `models/alzheimer_resnet50_best.pt`, is approximately
-99 MB and is stored using [Git Large File Storage (Git LFS)](https://git-lfs.com/).
+The two small CNN checkpoints are stored directly in Git. The larger
+ResNet-50 and contrastive-learning checkpoints are approximately 95 MiB each
+and are stored using [Git Large File Storage (Git LFS)](https://git-lfs.com/).
+These include the ImageNet-pretrained ResNet-50, the supervised contrastive
+encoder and its classifiers, and the self-supervised SimCLR encoder and its
+classifiers, including the one trained with 10% of the labels. Together, the
+LFS-tracked checkpoints occupy approximately 750 MiB.
 
 Install Git LFS before cloning the repository. For example, on Ubuntu or
 Debian:
@@ -20,7 +45,7 @@ once for your user account:
 git lfs install
 ```
 
-A normal `git clone` will then download the complete ResNet-50 checkpoint. For
+A normal `git clone` will then download all committed model checkpoints. For
 an existing clone, retrieve any missing LFS objects with:
 
 ```bash
@@ -28,16 +53,19 @@ git pull
 git lfs pull
 ```
 
-Verify that the model was downloaded rather than left as a small LFS pointer:
+Verify that the models were downloaded rather than left as small LFS
+pointers:
 
 ```bash
 git lfs ls-files
-ls -lh models/alzheimer_resnet50_best.pt
+ls -lh models/*.pt
 ```
 
-The model file should be approximately 95 MiB. With `RETRAIN_RESNET = False`,
-the notebook loads this checkpoint and skips the ResNet-50 hyperparameter
-search and training.
+The large checkpoint files should be approximately 95 MiB each. When the
+corresponding retraining flags are set to `False`, the notebook loads the
+committed checkpoints and skips the associated searches or training runs.
+These flags are `RETRAIN_MODELS`, `RETRAIN_RESNET`, `RETRAIN_CONTRASTIVE`,
+`RETRAIN_CONTRASTIVE_CLASSIFIER` and `RETRAIN_SIMCLR`.
 
 ## Environment setup
 
@@ -72,8 +100,8 @@ Open `alzheimer_classification.ipynb` and select the
 
 ## Google Colab
 
-Install Git LFS, clone the repository, retrieve the trained ResNet-50 model and
-install only the non-PyTorch dependencies:
+Install Git LFS, clone the repository, retrieve the trained ResNet-50 and
+contrastive-learning models, and install only the non-PyTorch dependencies:
 
 ```bash
 !apt-get update -qq
@@ -90,22 +118,24 @@ CPU-only PyTorch build. Colab's preinstalled CUDA-enabled PyTorch should be
 used instead. Enable a GPU under **Runtime > Change runtime type** before
 running the notebook.
 
-On Colab, the notebook mounts Google Drive and stores in-progress ResNet-50
-search state under:
+On Colab, the notebook mounts Google Drive and stores in-progress search state
+and newly trained checkpoints for the ResNet-50 and contrastive-learning
+experiments under:
 
 ```text
 MyDrive/alzheimer-classification/models/
 ```
 
-If `models/alzheimer_resnet50_best.pt` exists in the cloned repository, that
-committed model takes precedence and is loaded without starting a new search.
-If the dataset is stored at
+When a matching checkpoint exists in the cloned repository and its retraining
+flag is `False`, the committed model takes precedence over the Google Drive
+copy and is loaded without repeating its search or training run. If the
+dataset is stored at
 `MyDrive/alzheimer-classification/Alzheimer_s Dataset`, the notebook copies it
 to Colab's temporary local storage for faster training.
 
 ## Dataset layout
 
-Download the Kaggle dataset `tourist55/alzheimers-dataset-4-class-of-images`
+Download the [Alzheimers Disease Dataset from Kaggle](https://www.kaggle.com/datasets/kumarln/alzheimers-disease-dataset)
 and extract it without combining or renaming its original folders. The
 notebook expects this layout:
 
